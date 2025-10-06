@@ -1,0 +1,17 @@
+<%= form_with(model: task, class: "mb-7") do |form| %>
+  <% if task.errors.any? %>
+    <div class="mb-5">
+      <h2 class="text-red-600 font-bold">Please fix the following errors:</h2>
+      <ul class="list-disc list-inside text-red-600">
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="mb-5">
+    <%= form.text_field :description, placeholder: "Add new task", class: "inline-block w-96 px-3 py-2 mt-2 shadow rounded-md border border-gray-200 outline-none" %>
+    <%= form.submit "Save", class: "btn py-2 ml-2 bg-blue-600 text-white" %>
+  </div>
+<% end %>
