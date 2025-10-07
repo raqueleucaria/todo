@@ -46,7 +46,7 @@ class TasksController < ApplicationController
 
   def toggle
     @task.update!(completed: params[:completed])
-    
+
     respond_to do |format|
       format.json { render json: { message: "Success" } }
       format.turbo_stream do
@@ -70,10 +70,10 @@ class TasksController < ApplicationController
   # Atualiza a tarefa atual e todas as tarefas relacionadas (pai/filhas) conforme as regras de negócio
   def build_toggle_turbo_streams
     streams = []
-    
+
     # Atualizar a tarefa atual
     streams << turbo_stream.replace(dom_id(@task), partial: "task", locals: { task: @task })
-    
+
     if @task.parent_id.nil?
       # Se é tarefa principal, atualizar todas as subtarefas (que foram alteradas pelos callbacks)
       @task.subtasks.reload.each do |subtask|
@@ -84,7 +84,7 @@ class TasksController < ApplicationController
       parent = @task.parent.reload
       streams << turbo_stream.replace(dom_id(parent), partial: "task", locals: { task: parent })
     end
-    
+
     streams
   end
 end

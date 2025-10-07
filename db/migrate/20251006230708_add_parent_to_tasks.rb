@@ -3,4 +3,3 @@ class AddParentToTasks < ActiveRecord::Migration[8.0]
     add_reference :tasks, :parent, null: true, foreign_key: { to_table: :tasks }
   end
 end
-
