@@ -10,19 +10,26 @@ export default class extends Controller {
         const csrfToken = document.querySelector("[name='csrf-token']").content
 
         fetch(`/tasks/${id}/toggle`, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
+                'Accept': 'text/vnd.turbo-stream.html',
                 'Content-Type': 'application/json',
                 'X-CSRF-Token': csrfToken
             },
-            body: JSON.stringify({ completed: e.target.checked }) // body data type must match "Content-Type" header
+            body: JSON.stringify({ completed: e.target.checked })
         })
-          .then(response => response.json())
-          .then(data => {
-             alert(data.message)
-           })
+        .then(response => response.text())
+        .then(html => {
+            if (html.trim()) {
+                Turbo.renderStreamMessage(html)
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar tarefa:', error)
+            e.target.checked = !e.target.checked
+        })
     }
 }

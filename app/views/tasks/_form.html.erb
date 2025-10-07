@@ -1,8 +1,13 @@
-<%= form_with(model: task, class: "mb-7") do |form| %>
+<%= form_with(model: task, class: "w-full") do |form| %>
   <% if task.errors.any? %>
-    <div class="mb-5">
-      <h2 class="text-red-600 font-bold">Please fix the following errors:</h2>
-      <ul class="list-disc list-inside text-red-600">
+    <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <div class="flex items-center mb-2">
+        <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+        </svg>
+        <h3 class="text-red-800 font-medium">Por favor, corrija os seguintes erros:</h3>
+      </div>
+      <ul class="list-disc list-inside text-red-700 text-sm space-y-1">
         <% task.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -10,8 +15,12 @@
     </div>
   <% end %>
   
-  <div class="mb-5">
-    <%= form.text_field :description, placeholder: "Add new task", class: "inline-block w-96 px-3 py-2 mt-2 shadow rounded-md border border-gray-200 outline-none" %>
-    <%= form.submit "Save", class: "btn py-2 ml-2 bg-blue-600 text-white" %>
+  <div class="flex items-center gap-3">
+    <%= form.text_field :description, 
+        placeholder: "Digite uma nova tarefa...", 
+        class: "flex-grow px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors shadow-sm",
+        autocomplete: "off" %>
+    <%= form.submit "Adicionar", 
+        class: "px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors cursor-pointer shadow-sm" %>
   </div>
 <% end %>

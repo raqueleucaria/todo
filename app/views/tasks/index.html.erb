@@ -1,19 +1,23 @@
-<% if notice.present? %>
-  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice">
-    <%= notice %>
-  </p>
-<% end %>
+<div id="notice"></div>
 
-<h1 class="font-bold text-2xl">Task</h1>
+<div class="max-w-5xl mx-auto mt-8 px-4">
+  <div class="text-center mb-8">
+    <h1 class="font-bold text-4xl text-gray-800 mb-2">Lista de Tarefas</h1>
+    <p class="text-gray-600">Organize suas tarefas de forma eficiente</p>
+  </div>
 
-<div class="mt-4">
-  <%= render "form", task: @task %>
-</div>
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <div id="new_task">
+      <%= render "form", task: @task %>
+    </div>
+  </div>
 
-<div id="tasks">
-  <h1 class="font-bold text-lg mb-7">Tasks</h1>
+  <div id="empty_state">
+    <%= render "empty_state" if @tasks.empty? %>
+  </div>
 
-  <div class="px-5" data-controller="tasks">
-    <%= render @tasks %>
+  <div id="tasks" class="space-y-4">
+    <%= render @tasks if @tasks.any? %>
   </div>
 </div>
+
